@@ -1,26 +1,282 @@
 @import "tailwindcss";
 
+/*
+ * ThinkPad — editorial / warm design system.
+ *
+ * Two themes (warm "paper" light + warm dark) driven by `data-theme` on <html>,
+ * set by the settings store (and a no-flash inline script in the root layout).
+ * `@custom-variant dark` rewires Tailwind's `dark:` utilities to respond to that
+ * attribute instead of the OS media query, so a user's saved preference wins.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ---- Light (warm paper) ---------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f7f4ee;
+  --foreground: #21201c;
+  --card: #fffdf8;
+  --muted: #efe9df;
+  --muted-foreground: #6f6a60;
+  --border: #e6dfd2;
+  --input: #e6dfd2;
+  --ring: #b45309;
+
+  --primary: #26241f;
+  --primary-foreground: #faf8f3;
+
+  --accent: #b45309;
+  --accent-foreground: #ffffff;
+  --accent-soft: #f6ecdd;
+
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+  --success: #2f7d44;
+
+  --shadow-color: 30 25 20;
 }
 
+/* ---- Dark (warm) ----------------------------------------------------- */
+:root[data-theme="dark"] {
+  --background: #1b1917;
+  --foreground: #f2ede4;
+  --card: #24211d;
+  --muted: #2b2723;
+  --muted-foreground: #a8a096;
+  --border: #39332d;
+  --input: #39332d;
+  --ring: #e8a34d;
+
+  --primary: #f2ede4;
+  --primary-foreground: #1b1917;
+
+  --accent: #e8a34d;
+  --accent-foreground: #211a10;
+  --accent-soft: #322a1e;
+
+  --destructive: #f2938a;
+  --destructive-foreground: #211110;
+  --success: #6fce8b;
+
+  --shadow-color: 0 0 0;
+}
+
+/* Expose the tokens to Tailwind as utility colors (inline = keep the var()
+   reference, so runtime theme swaps propagate to every utility live). */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv05", "cv08", "ss01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 28%, transparent);
+  }
+
+  /* Thin, theme-aware scrollbars for a more app-like feel. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(
+        in srgb,
+        var(--color-muted-foreground) 40%,
+        transparent
+      )
+      transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: color-mix(
+      in srgb,
+      var(--color-muted-foreground) 35%,
+      transparent
+    );
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: color-mix(
+      in srgb,
+      var(--color-muted-foreground) 55%,
+      transparent
+    );
+    background-clip: content-box;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Soft, warm elevation used on cards and popovers. */
+  .shadow-soft {
+    box-shadow:
+      0 1px 2px rgb(var(--shadow-color) / 0.04),
+      0 8px 24px -12px rgb(var(--shadow-color) / 0.12);
+  }
+  .shadow-pop {
+    box-shadow:
+      0 2px 8px rgb(var(--shadow-color) / 0.08),
+      0 16px 40px -16px rgb(var(--shadow-color) / 0.22);
+  }
+
+  @keyframes toast-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .animate-in {
+    animation: toast-in 0.2s ease-out;
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.97);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  .animate-scale-in {
+    animation: scale-in 0.18s ease-out;
+  }
 }
+
+/* ---- Writing canvas paper patterns ----------------------------------- */
+@layer components {
+  .note-canvas {
+    --canvas-text: 1rem;
+    --canvas-top: 1.5rem;
+    --canvas-left: 1.75rem;
+    --rule: calc(var(--canvas-text) * 2);
+    font-size: var(--canvas-text);
+    line-height: var(--rule);
+    /* Background scrolls with the text so lines stay under words. */
+    background-attachment: local;
+    background-repeat: repeat;
+  }
+
+  .note-canvas[data-pattern="blank"] {
+    background-image: none;
+  }
+
+  .note-canvas[data-pattern="ruled"] {
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--rule) - 1px),
+      color-mix(in srgb, var(--muted-foreground) 26%, transparent)
+        calc(var(--rule) - 1px),
+      color-mix(in srgb, var(--muted-foreground) 26%, transparent) var(--rule)
+    );
+    background-size: 100% var(--rule);
+    background-position: 0 var(--canvas-top);
+  }
+
+  .note-canvas[data-pattern="dotted"] {
+    background-image: radial-gradient(
+      color-mix(in srgb, var(--muted-foreground) 42%, transparent) 1.2px,
+      transparent 1.4px
+    );
+    background-size: var(--rule) var(--rule);
+    background-position: var(--canvas-left) var(--canvas-top);
+  }
+
+  .paper-grid-bg {
+    background-image: 
+      linear-gradient(to right, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .paper-ruled-lines {
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 27px,
+      color-mix(in srgb, var(--accent) 18%, transparent) 28px
+    );
+    background-size: 100% 28px;
+  }
+
+  .error-squiggly {
+    text-decoration-style: wavy;
+    text-decoration-line: underline;
+    text-decoration-color: #ef4444;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .grammar-squiggly {
+    text-decoration-style: wavy;
+    text-decoration-line: underline;
+    text-decoration-color: #f59e0b;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.9; }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .animate-cursor-blink {
+    animation: cursor-blink 1s step-start infinite;
+  }
+}
+

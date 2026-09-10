@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Typer — Web
 
-## Getting Started
+Marketing/landing site and authenticated web area for **AI Typer**. Built with
+Next.js 16 (App Router), React 19, TypeScript, and Tailwind CSS v4.
 
-First, run the development server:
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev        # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Other scripts: `pnpm build`, `pnpm start`, `pnpm lint`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Routing lives in `app/` and stays thin — route files only compose features.
+All application code lives under `src/`, organized **feature-first**.
 
-## Learn More
+```
+app/                      # ROUTING ONLY (thin — composes features)
+├── (marketing)/          # public pages         → "/"
+├── (auth)/login/         # login                → "/login"
+├── (app)/dashboard/      # authenticated area   → "/dashboard"
+├── layout.tsx            # root: fonts, metadata
+├── globals.css           # Tailwind v4 theme
+└── not-found.tsx
 
-To learn more about Next.js, take a look at the following resources:
+src/
+├── features/             # domain black-boxes; import ONLY via each index.ts
+│   ├── auth/             #   components/ hooks/ api/ + index.ts (public surface)
+│   ├── marketing/
+│   └── dashboard/
+├── components/
+│   ├── ui/               # design-system primitives (Button, Input, …)
+│   └── layout/           # Navbar, Footer, Sidebar
+├── lib/                  # framework-agnostic pure helpers
+├── hooks/                # cross-feature hooks only
+├── providers/            # React context providers (Query, Theme, …)
+├── config/               # routes, site constants, env
+├── store/                # global Zustand stores (UI/session state)
+├── styles/
+└── types/                # shared/global types
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See [docs/architecture.md](docs/architecture.md) for the conventions and the
+reasoning behind this layout.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> **Note:** This project uses a modified Next.js 16 — consult
+> `node_modules/next/dist/docs/` before relying on older Next.js conventions.

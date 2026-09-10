@@ -1,0 +1,9 @@
+{
+  "threshold": 3,
+  "minTokens": 50,
+  "reporters": ["consoleFull"],
+  "gitignore": true,
+  "format": ["tsx", "typescript", "jsx", "javascript"],
+  "ignore": ["**/node_modules/**", "**/.next/**"],
+  "path": ["src", "app"]
+}
