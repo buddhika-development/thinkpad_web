@@ -20,8 +20,24 @@ function readCredentials(formData: FormData) {
 
 /** Builds an absolute URL back to our OAuth/email callback route. */
 async function callbackUrl() {
-  const origin = (await headers()).get("origin") ?? "";
-  return `${origin}${routes.callback}`;
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+    return `${siteUrl}${routes.callback}`;
+  }
+
+  const headersList = await headers();
+  const origin = headersList.get("origin");
+  if (origin) {
+    return `${origin}${routes.callback}`;
+  }
+
+  const host = headersList.get("x-forwarded-host") || headersList.get("host");
+  const proto = headersList.get("x-forwarded-proto") || "https";
+  if (host) {
+    return `${proto}://${host}${routes.callback}`;
+  }
+
+  return `http://localhost:3000${routes.callback}`;
 }
 
 export async function signInWithPassword(
