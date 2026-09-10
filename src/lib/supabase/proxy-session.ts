@@ -5,6 +5,9 @@ import { routes } from "@/config/routes";
 
 import { getSupabaseEnv } from "./env";
 
+/** Path prefixes that require an authenticated user. */
+const PROTECTED_PREFIXES = [routes.dashboard, routes.writer, routes.settings];
+
 /**
  * Refreshes the Supabase session cookie on every request and performs an
  * optimistic auth guard. Called from the root `proxy.ts`.
@@ -40,7 +43,9 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const { pathname } = request.nextUrl;
-  const isProtected = pathname.startsWith(routes.dashboard);
+  const isProtected = PROTECTED_PREFIXES.some(
+    (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+  );
   const isAuthPage = pathname === routes.login || pathname === routes.register;
 
   if (!user && isProtected) {

@@ -6,7 +6,7 @@ import type { ComponentProps } from "react";
 export function Input({ className = "", ...props }: ComponentProps<"input">) {
   return (
     <input
-      className={`w-full rounded-lg border border-zinc-300 bg-transparent px-3 py-2.5 text-sm transition outline-none placeholder:text-zinc-400 focus:border-zinc-500 dark:border-zinc-700 dark:focus:border-zinc-400 ${className}`}
+      className={`border-input bg-card text-foreground placeholder:text-muted-foreground focus:border-ring focus-visible:ring-ring/40 w-full rounded-xl border px-3.5 py-2.5 text-sm transition outline-none focus-visible:ring-2 ${className}`}
       {...props}
     />
   );

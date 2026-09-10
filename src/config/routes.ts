@@ -7,6 +7,8 @@ export const routes = {
   login: "/login",
   register: "/register",
   dashboard: "/dashboard",
+  writer: "/writer",
+  settings: "/settings",
   /** OAuth redirect target — exchanges the provider code for a session. */
   callback: "/callback",
 } as const;

@@ -18,13 +18,20 @@ services`); this repo is **web only**.
 
 ## Feature map
 
-| Feature   | Route(s)                           | Purpose                       | Status         | Doc                      |
-| --------- | ---------------------------------- | ----------------------------- | -------------- | ------------------------ |
-| Marketing | `/`                                | Public landing / product info | 🟡 scaffolded  | —                        |
-| Auth      | `/login`, `/register`, `/callback` | Sign in / account access      | 🔵 in progress | [auth](features/auth.md) |
-| Dashboard | `/dashboard`                       | Authenticated user area       | 🟡 scaffolded  | —                        |
+| Feature   | Route(s)                             | Purpose                               | Status         | Doc                                        |
+| --------- | ------------------------------------ | ------------------------------------- | -------------- | ------------------------------------------ |
+| Marketing | `/`                                  | Public landing / product info         | 🟡 scaffolded  | —                                          |
+| Auth      | `/login`, `/register`, `/callback`   | Sign in / account access              | 🔵 in progress | [auth](features/auth.md)                   |
+| User area | `/dashboard`, `/writer`, `/settings` | Authenticated shell + dashboard links | 🟢 shipped     | [web-user-area](features/web-user-area.md) |
+| Writer    | `/writer`                            | AI writing canvas + streamed re-write | 🟢 shipped     | [writer](features/writer.md)               |
+| Settings  | `/settings`                          | Theme + writing-canvas prefs (synced) | 🟢 shipped     | [web-user-area](features/web-user-area.md) |
 
 Status legend: 🟡 scaffolded · 🟢 shipped · 🔵 in progress
+
+The **user area** shares a warm "paper" design system (`data-theme` light/dark +
+notebook canvas patterns, defined in `app/globals.css`), a branded app shell,
+and Supabase-profile-synced theme/canvas preferences — matching the desktop
+(`electron-app`) product, rebuilt the web-native way.
 
 ## Tech stack
 

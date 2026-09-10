@@ -1,14 +1,18 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { AppShellHeader } from "@/components/layout/AppShellHeader";
 import { routes } from "@/config/routes";
 import { AuthProvider, getCurrentUser, UserMenu } from "@/features/auth";
+import { SettingsSyncProvider } from "@/features/settings";
+import { ToastProvider } from "@/providers/toast-provider";
+import { UnsavedChangesProvider } from "@/providers/unsaved-changes-provider";
 
 /**
- * Authenticated app shell — wraps the logged-in product area
- * (dashboard, settings, etc.). Server-side guard runs here (secure check);
+ * Authenticated app shell — wraps the logged-in product area (dashboard,
+ * writer, settings). The server-side guard runs here (secure check);
  * `proxy.ts` provides the optimistic first pass. `AuthProvider` mirrors the
- * verified user into the client session store for the nav.
+ * verified user into the client session store; `SettingsSyncProvider` adopts
+ * their saved theme/canvas preferences; `ToastProvider` powers canvas feedback.
  */
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const user = await getCurrentUser();
@@ -16,18 +20,16 @@ export default async function AppLayout({ children }: LayoutProps<"/">) {
 
   return (
     <AuthProvider initialUser={user}>
-      <div className="flex flex-1 flex-col">
-        <header className="flex items-center justify-between border-b border-zinc-200 px-6 py-4 dark:border-zinc-800">
-          <Link
-            href={routes.dashboard}
-            className="font-semibold tracking-tight"
-          >
-            AI Typer
-          </Link>
-          <UserMenu />
-        </header>
-        {children}
-      </div>
+      <SettingsSyncProvider userId={user.id} userMetadata={user.user_metadata}>
+        <ToastProvider>
+          <UnsavedChangesProvider>
+            <div className="flex flex-1 flex-col">
+              <AppShellHeader userMenu={<UserMenu />} />
+              {children}
+            </div>
+          </UnsavedChangesProvider>
+        </ToastProvider>
+      </SettingsSyncProvider>
     </AuthProvider>
   );
 }
