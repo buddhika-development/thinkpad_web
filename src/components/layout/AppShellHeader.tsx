@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useState } from "react";
@@ -43,7 +44,7 @@ export function AppShellHeader({ userMenu }: { userMenu: ReactNode }) {
 
   return (
     <header className="border-border bg-background/80 sticky top-0 z-30 border-b backdrop-blur-md">
-      <div className="relative mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <div className="relative mx-auto flex w-[80%] max-w-[1440px] items-center justify-between gap-4 px-4 py-3 sm:px-6">
         <div className="flex items-center gap-1">
           <button
             type="button"
@@ -62,11 +63,15 @@ export function AppShellHeader({ userMenu }: { userMenu: ReactNode }) {
           <Link
             href={routes.dashboard}
             onClick={(e) => handleLinkClick(e, routes.dashboard)}
-            className="mr-2 flex items-center gap-2 font-semibold tracking-tight sm:mr-3"
+            className="mr-2 flex items-center gap-2.5 font-semibold tracking-tight sm:mr-3"
           >
-            <span className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-lg text-[13px] font-bold">
-              T
-            </span>
+            <Image
+              src="/thinkpad.png"
+              alt="ThinkPad Logo"
+              width={32}
+              height={32}
+              className="size-8 rounded-lg object-contain"
+            />
             ThinkPad
           </Link>
 
