@@ -65,9 +65,9 @@ export function AppShellHeader({ userMenu }: { userMenu: ReactNode }) {
             className="mr-2 flex items-center gap-2 font-semibold tracking-tight sm:mr-3"
           >
             <span className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-lg text-[13px] font-bold">
-              A
+              T
             </span>
-            AI Typer
+            ThinkPad
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex">

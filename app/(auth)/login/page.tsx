@@ -12,7 +12,7 @@ export default function LoginPage() {
     <main className="flex flex-1 items-center justify-center px-6 py-12">
       <AuthCard
         title="Welcome back"
-        subtitle="Sign in to continue to AI Typer"
+        subtitle="Sign in to continue to ThinkPad"
         footer={
           <>
             Don&apos;t have an account?{" "}

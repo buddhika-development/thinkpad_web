@@ -12,7 +12,7 @@ export default function RegisterPage() {
     <main className="flex flex-1 items-center justify-center px-6 py-12">
       <AuthCard
         title="Create your account"
-        subtitle="Get started with AI Typer"
+        subtitle="Get started with ThinkPad"
         footer={
           <>
             Already have an account?{" "}

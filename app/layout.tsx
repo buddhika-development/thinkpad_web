@@ -13,10 +13,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "AI Typer",
-    template: "%s | AI Typer",
+    default: "ThinkPad",
+    template: "%s | ThinkPad",
   },
-  description: "AI Typer — explore the product and sign in to get started.",
+  description: "ThinkPad — explore the product and sign in to get started.",
 };
 
 /**

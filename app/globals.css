@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * AI Typer — editorial / warm design system.
+ * ThinkPad — editorial / warm design system.
  *
  * Two themes (warm "paper" light + warm dark) driven by `data-theme` on <html>,
  * set by the settings store (and a no-flash inline script in the root layout).
