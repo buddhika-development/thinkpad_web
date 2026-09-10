@@ -32,25 +32,30 @@ export function ThinkPadHeader({
   };
 
   return (
-    <div className="border-b border-border bg-card/60 backdrop-blur-sm px-6 py-3 flex items-center justify-between gap-4">
-      <div className="flex items-center gap-3 min-w-0">
-        <Link
-          href={routes.dashboard}
-          onClick={handleDashboardClick}
-          className="text-muted-foreground hover:text-foreground text-xs font-medium flex items-center gap-1.5 transition"
-        >
-          <ArrowDownIcon className="size-3.5 -rotate-270" />
-          <span>Dashboard</span>
-        </Link>
-        <span className="text-border">/</span>
+    <div className="border-b border-border bg-card/60 backdrop-blur-sm px-4 py-2.5 sm:px-6 sm:py-3 flex items-start justify-between gap-3">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 min-w-0">
+        <div className="flex items-center gap-2 min-w-0">
+          <Link
+            href={routes.dashboard}
+            onClick={handleDashboardClick}
+            className="text-muted-foreground hover:text-foreground text-xs font-medium flex items-center gap-1.5 transition shrink-0"
+          >
+            <ArrowDownIcon className="size-3.5 -rotate-270" />
+            <span>Dashboard</span>
+          </Link>
+          <span className="text-border shrink-0">/</span>
 
-        {isLoading ? (
-          <div className="h-5 w-32 bg-muted animate-pulse rounded" />
-        ) : (
-          <div className="flex items-center gap-2 min-w-0">
+          {isLoading ? (
+            <div className="h-5 w-32 bg-muted animate-pulse rounded" />
+          ) : (
             <h1 className="text-foreground text-sm font-semibold truncate">
               {thinkPadId ? thinkPad?.thinkPadName ?? "Saved ThinkPad" : "Temporary ThinkPad"}
             </h1>
+          )}
+        </div>
+
+        {!isLoading && (
+          <div className="flex items-center gap-2 shrink-0">
             <span
               className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-medium ${
                 thinkPadId
@@ -86,10 +91,10 @@ export function ThinkPadHeader({
           variant="outline"
           size="sm"
           onClick={onOpenHistory}
-          className="h-8 gap-1.5 text-xs"
+          className="h-8 gap-1.5 text-xs shrink-0"
         >
           <RefreshIcon className="size-3.5" />
-          <span>History</span>
+          <span className="hidden sm:inline">History</span>
         </Button>
       )}
     </div>
