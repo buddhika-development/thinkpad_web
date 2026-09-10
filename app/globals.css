@@ -227,4 +227,56 @@
     background-size: var(--rule) var(--rule);
     background-position: var(--canvas-left) var(--canvas-top);
   }
+
+  .paper-grid-bg {
+    background-image: 
+      linear-gradient(to right, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in srgb, var(--border) 45%, transparent) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .paper-ruled-lines {
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0px,
+      transparent 27px,
+      color-mix(in srgb, var(--accent) 18%, transparent) 28px
+    );
+    background-size: 100% 28px;
+  }
+
+  .error-squiggly {
+    text-decoration-style: wavy;
+    text-decoration-line: underline;
+    text-decoration-color: #ef4444;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .grammar-squiggly {
+    text-decoration-style: wavy;
+    text-decoration-line: underline;
+    text-decoration-color: #f59e0b;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.9; }
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  @keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .animate-cursor-blink {
+    animation: cursor-blink 1s step-start infinite;
+  }
 }
+

@@ -1,7 +1,11 @@
 /**
- * Marketing shell — wraps all public, unauthenticated pages
- * (landing, features, pricing, etc.). Nav + footer live here.
+ * Marketing shell — wraps public landing page.
+ * Provides flexible screen scrolling for mobile while maintaining a full-height shell for desktop.
  */
 export default function MarketingLayout({ children }: LayoutProps<"/">) {
-  return <div className="flex flex-1 flex-col">{children}</div>;
+  return (
+    <div className="min-h-screen w-screen overflow-x-hidden overflow-y-auto flex flex-col bg-background text-foreground selection:bg-accent/20">
+      {children}
+    </div>
+  );
 }

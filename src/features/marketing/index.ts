@@ -1,5 +1,3 @@
-/**
- * Public surface of the `marketing` feature (landing sections, pricing, etc.).
- * Import marketing UI from here only — internals stay private.
- */
-export {};
+export { MarketingHeader } from "./components/MarketingHeader";
+export { HeroSection } from "./components/HeroSection";
+export { HeroTypingDemo } from "./components/HeroTypingDemo";
